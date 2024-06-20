@@ -1,0 +1,32 @@
+﻿@model List<CarWorkshop.Service.Query.Dtos.CarDto>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+        <h2 class="text-center">Samochody Klienta</h2>
+        <a asp-action="ClientOrders" asp-controller="Orders" class="btn btn-primary btn-sm">Powrót do zamówień klienta</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Marka</th>
+                    <th scope="col">Model</th>
+                    <th scope="col">Rok produkcji</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var car in Model)
+                {
+                    <tr>
+                        <td>@car.Id</td>
+                        <td>@car.Brand</td>
+                        <td>@car.Model</td>
+                        <td>@car.ProductionYear</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
