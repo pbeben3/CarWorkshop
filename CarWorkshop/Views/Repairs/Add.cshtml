@@ -1,0 +1,31 @@
+﻿@model CarWorkshop.Service.Command.Repair.Add.AddRepairCommand
+
+@{
+    ViewData["Title"] = "Dodaj Naprawę";
+}
+
+<h2>Dodaj Naprawę</h2>
+
+<form asp-action="Add" asp-controller="Repairs" method="post">
+    <input type="hidden" asp-for="OrderId" />
+
+    <div class="form-group">
+        <label asp-for="RepairDate" class="control-label">Data naprawy</label>
+        <input asp-for="RepairDate" type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        <span asp-validation-for="RepairDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description" class="control-label">Opis naprawy</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Cost" class="control-label">Koszt</label>
+        <input asp-for="Cost" type="number" class="form-control" />
+        <span asp-validation-for="Cost" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Dodaj</button>
+</form>

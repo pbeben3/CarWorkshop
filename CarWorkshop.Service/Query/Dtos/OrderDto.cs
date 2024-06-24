@@ -21,14 +21,14 @@ namespace CarWorkshop.Service.Query.Dtos
             Description = description;
         }
 
-        public int Id { get; }
-        public int ClientId { get; }
-        public string ClientName { get; }
-        public int CarId { get; }
-        public string CarBrand { get; }
-        public string CarModel { get; }
-        public DateTime OrderDate { get; }
-        public string Status { get; }
-        public string Description { get; }
+        public int Id { get;  }
+        public int ClientId { get;  }
+        public string ClientName { get;  }
+        public int CarId { get;  }
+        public string CarBrand { get;  }
+        public string CarModel { get;  }
+        public DateTime OrderDate { get;  }
+        public string Status { get;  }
+        public string Description { get;  }
     }
 }

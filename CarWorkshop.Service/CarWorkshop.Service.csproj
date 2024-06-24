@@ -14,8 +14,4 @@
     <ProjectReference Include="..\CarWorkshop.Storage\CarWorkshop.Storage.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Query\Repair\" />
-  </ItemGroup>
-
 </Project>

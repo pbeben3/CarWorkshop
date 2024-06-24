@@ -13,5 +13,6 @@ namespace CarWorkshop.Service.Command.Order.Add
         public DateTime OrderDate { get; set; }
         public string Status { get; set; }
         public string Description { get; set; }
+        public List<CarWorkshop.Storage.Entities.Car> Cars { get; set; } 
     }
 }

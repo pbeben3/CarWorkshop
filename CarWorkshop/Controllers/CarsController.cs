@@ -1,4 +1,5 @@
-﻿using CarWorkshop.Service.Query.Car;
+﻿using CarWorkshop.Service.Command.Car.Add;
+using CarWorkshop.Service.Query.Car;
 using CarWorkshop.Storage.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,31 @@ namespace CarWorkshop.Controllers
             var handler = new GetCarsByClientIdQueryHandler(_carWorkshopRepository);
             var query = new GetCarsByClientIdQuery(id);
             var cars = handler.Handle(query);
-            return View(cars); 
+            ViewBag.ClientId = id;
+            return View("Index",cars); 
+        }
+        public IActionResult Add(int clientId)
+        {
+            var command = new AddCarCommand { ClientId = clientId };
+            return View(command);
+        }
+
+        [HttpPost]
+        public IActionResult Add(AddCarCommand command)
+        {
+
+
+            var handler = new AddCarCommandHandler(_carWorkshopRepository);
+            var result = handler.Handle(command);
+
+            if (result.IsFailure)
+            {
+                return View(command); 
+            }
+
+            return RedirectToAction("ClientCars", new { id = command.ClientId });
         }
     }
+
 }
+

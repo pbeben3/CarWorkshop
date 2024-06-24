@@ -1,0 +1,22 @@
+﻿@model CarWorkshop.Service.Command.Order.Edit.UpdateOrderStatusCommand
+
+<div class="container">
+    <h2>Zmiana statusu zamówienia</h2>
+
+    <form asp-action="Edit" method="post">
+        <div class="form-group">
+            <label asp-for="OrderId">ID Zamówienia</label>
+            <input asp-for="OrderId" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="CurrentStatus">Aktualny status</label>
+            <input asp-for="CurrentStatus" class="form-control" readonly />
+        </div>
+        <div class="form-group">
+            <label asp-for="NewStatus">Nowy status</label>
+            <input asp-for="NewStatus" class="form-control" />
+            <span asp-validation-for="NewStatus" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Zapisz</button>
+    </form>
+</div>

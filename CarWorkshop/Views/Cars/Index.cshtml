@@ -3,7 +3,10 @@
 <div class="container">
     <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
         <h2 class="text-center">Samochody Klienta</h2>
-        <a asp-action="ClientOrders" asp-controller="Orders" class="btn btn-primary btn-sm">Powrót do zamówień klienta</a>
+        <div class="ms-auto">
+            <a asp-action="Index" asp-controller="Clients" class="btn btn-primary btn-sm me-2">Powrót do listy klientów</a>
+            <a asp-action="Add" asp-controller="Cars" asp-route-clientId="@ViewBag.ClientId" class="btn btn-info btn-sm">Dodaj samochód</a>
+        </div>
     </div>
 
     <div class="table-responsive">

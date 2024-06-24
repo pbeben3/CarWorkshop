@@ -13,9 +13,6 @@ namespace CarWorkshop.Extensions
         {
             serviceCollection.AddScoped<ICarWorkshopRepository, CarWorkshopRepository>();
             serviceCollection.AddDbContext<CarWorkshopDbContext>();
-            //serviceCollection.AddScoped<IQueryHandler<GetAllClientsQuery, List<ClientDto>>, GetAllClientsQueryHandler>();
-
-            //serviceCollection.AddDbContext<CarWorkshopDbContext, CarWorkshopDbContext>();
             return serviceCollection;
         }
     }

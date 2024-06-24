@@ -6,6 +6,7 @@ using CarWorkshop.Service.Command.Client.Add;
 using CarWorkshop.Service;
 using CarWorkshop.Storage.Repository;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using CarWorkshop.Service.Command.Client.Delete;
 
 namespace CarWorkshop.Controllers
 {
@@ -43,5 +44,21 @@ namespace CarWorkshop.Controllers
         }
 
 
+        [HttpPost]
+        public IActionResult Delete(DeleteClientCommand command)
+        {
+            var handler = new DeleteClientCommandHandler(_carWorkshopRepository);
+            var result = handler.Handle(command);
+
+            if (result.IsFailure)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+
+
+
+        }
     }
 }

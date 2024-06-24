@@ -21,7 +21,8 @@ namespace CarWorkshop.Service.Command.Repair.Edit
             var validationResult = new EditRepairCommandValidator().Validate(command);
             if (!validationResult.IsValid)
             {
-                return Result.Fail(validationResult.Errors.Select(e => e.ErrorMessage).ToArray());
+                var errorMessage = string.Join(", ", validationResult.Errors.Select(e => e.ErrorMessage));
+                return Result.Fail(errorMessage);
             }
 
             var repair = _repository.GetRepairById(command.Id);

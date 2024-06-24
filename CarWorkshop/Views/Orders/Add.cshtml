@@ -1,0 +1,30 @@
+﻿@model CarWorkshop.Service.Command.Order.Add.AddOrderCommand
+
+<div class="container">
+    <h2 class="text-center">Dodaj Zamówienie</h2>
+    <form asp-action="Add" method="post">
+        <div class="form-group">
+            <label for="OrderDate">Data Zamówienia</label>
+            <input type="date" class="form-control" id="OrderDate" name="OrderDate" value="@DateTime.Today.ToString("yyyy-MM-dd")" required />
+        </div>
+        <div class="form-group">
+            <label for="Status">Status</label>
+            <input type="text" class="form-control" id="Status" name="Status" value="@Model.Status" required />
+        </div>
+        <div class="form-group">
+            <label for="Description">Opis</label>
+            <textarea class="form-control" id="Description" name="Description" required>@Model.Description</textarea>
+        </div>
+        <div class="form-group">
+            <label for="CarId">Samochód</label>
+            <select class="form-control" id="CarId" name="CarId" required>
+                @foreach (var car in Model.Cars)
+                {
+                    <option value="@car.Id">@car.Brand @car.Model</option>
+                }
+            </select>
+        </div>
+        <input type="hidden" name="ClientId" value="@Model.ClientId" />
+        <button type="submit" class="btn btn-primary">Dodaj Zamówienie</button>
+    </form>
+</div>

@@ -17,7 +17,7 @@ namespace CarWorkshop.Storage.Repository
             _context = context;
         }
 
-        // Metody dla klientów
+        // Client
         public List<Client> GetClients()
         {
             return _context.Clients.ToList();
@@ -37,21 +37,6 @@ namespace CarWorkshop.Storage.Repository
             _context.SaveChanges();
         }
 
-        public void EditClient(Client client)
-        {
-            _context.Clients.Update(client);
-            _context.SaveChanges();
-        }
-
-        public void RemoveClient(int clientId)
-        {
-            var client = _context.Clients.Find(clientId);
-            if (client != null)
-            {
-                _context.Clients.Remove(client);
-                _context.SaveChanges();
-            }
-        }
         public bool IsClientExist(string name, string surname, string email)
         {
             return _context.Clients.Any(c =>
@@ -59,16 +44,35 @@ namespace CarWorkshop.Storage.Repository
                 c.Surname == surname &&
                 c.Email == email);
         }
-
-        // Metody dla samochodów
-        public List<Car> GetCars()
+        public void DeleteClient(int clientId)
         {
-            return _context.Cars.ToList();
+            var client = _context.Clients
+                .Include(c => c.Cars)
+                .Include(c => c.Orders)
+                .ThenInclude(o => o.Repair)
+                .SingleOrDefault(c => c.Id == clientId);
+
+            if (client != null)
+            {
+                foreach (var order in client.Orders)
+                {
+                    _context.Repairs.RemoveRange(order.Repair);
+                }
+
+                _context.Orders.RemoveRange(client.Orders);
+
+                _context.Cars.RemoveRange(client.Cars);
+
+                _context.Clients.Remove(client);
+                _context.SaveChanges();
+            }
         }
-        public List<Car> GetCarsByClientId(int clientId)
+
+            // Car
+            public List<Car> GetCarsByClientId(int clientId)
         {
             return _context.Cars
-                .Include(c => c.Client) // Załaduj powiązanego klienta
+                .Include(c => c.Client) 
                 .Where(c => c.ClientId == clientId)
                 .ToList();
         }
@@ -87,12 +91,6 @@ namespace CarWorkshop.Storage.Repository
             _context.SaveChanges();
         }
 
-        public void EditCar(Car car)
-        {
-            _context.Cars.Update(car);
-            _context.SaveChanges();
-        }
-
         public void RemoveCar(int carId)
         {
             var car = _context.Cars.Find(carId);
@@ -103,11 +101,7 @@ namespace CarWorkshop.Storage.Repository
             }
         }
 
-        // Metody dla zamówień
-        public List<Order> GetOrders()
-        {
-            return _context.Orders.ToList();
-        }
+        // Order
 
         public Order GetOrderById(int orderId)
         {
@@ -139,21 +133,8 @@ namespace CarWorkshop.Storage.Repository
             _context.SaveChanges();
         }
 
-        public void RemoveOrder(int orderId)
-        {
-            var order = _context.Orders.Find(orderId);
-            if (order != null)
-            {
-                _context.Orders.Remove(order);
-                _context.SaveChanges();
-            }
-        }
 
-        // Metody dla napraw
-        public List<Repair> GetRepairs()
-        {
-            return _context.Repairs.ToList();
-        }
+        // Repair
 
         public Repair GetRepairById(int repairId)
         {
@@ -161,7 +142,17 @@ namespace CarWorkshop.Storage.Repository
                 .Include(r => r.Order)
                 .SingleOrDefault(r => r.Id == repairId);
         }
+        public List<Repair> GetRepairsByClientId(int clientId)
+        {
 
+            return _context.Repairs
+                .Include(r => r.Order)
+                    .ThenInclude(o => o.Client)
+                .Include(r => r.Order)
+                    .ThenInclude(o => o.Car)
+                .Where(r => r.Order != null && r.Order.ClientId == clientId)
+                .ToList();
+        }
         public void AddRepair(Repair repair)
         {
             _context.Repairs.Add(repair);
@@ -174,14 +165,5 @@ namespace CarWorkshop.Storage.Repository
             _context.SaveChanges();
         }
 
-        public void RemoveRepair(int repairId)
-        {
-            var repair = _context.Repairs.Find(repairId);
-            if (repair != null)
-            {
-                _context.Repairs.Remove(repair);
-                _context.SaveChanges();
-            }
-        }
     }
 }

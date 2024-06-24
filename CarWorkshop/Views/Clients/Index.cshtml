@@ -25,11 +25,15 @@
                         <td>@client.Name</td>
                         <td>@client.Surname</td>
                         <td>@client.Email</td>
-                        <td>
+                        <td class="align-middle">
                             <div class="btn-group" role="group" aria-label="Akcje">
-                                <a asp-action="ClientOrders" asp-controller="Orders" asp-route-id="@client.Id" class="btn btn-primary btn-sm mr-2">Zamówienia</a>
-                                <a asp-action="Repairs" asp-route-id="@client.Id" class="btn btn-secondary btn-sm mr-2">Historia Napraw</a>
+                                <a asp-action="ClientOrders" asp-controller="Orders" asp-route-id="@client.Id" class="btn btn-primary btn-sm">Zamówienia</a>
+                                <a asp-action="Index" asp-controller="Repairs" asp-route-id="@client.Id" class="btn btn-secondary btn-sm">Historia Napraw</a>
                                 <a asp-action="ClientCars" asp-controller="Cars" asp-route-id="@client.Id" class="btn btn-info btn-sm">Samochody</a>
+                                <form asp-action="Delete" method="post" onsubmit="return confirm('Czy na pewno chcesz usunąć tego klienta?');" class="btn btn-danger btn-sm">
+                                    <input type="hidden" name="ClientId" value="@client.Id" />
+                                    <button type="submit" class="btn btn-danger btn-sm">Usuń</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
@@ -38,3 +42,7 @@
         </table>
     </div>
 </div>
+
+
+
+

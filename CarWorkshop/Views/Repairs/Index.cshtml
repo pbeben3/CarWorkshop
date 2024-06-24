@@ -1,0 +1,36 @@
+﻿@model List<CarWorkshop.Service.Query.Dtos.RepairDto>
+
+<div class="container">
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-4">
+        <h2 class="text-center">Historia Napraw</h2>
+        <a asp-action="Index" asp-controller="Clients" class="btn btn-primary float-md-right">Powrót do listy klientów</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Data Naprawy</th>
+                    <th scope="col">Opis</th>
+                    <th scope="col">Koszt</th>
+                    <th scope="col">Marka Samochodu</th>
+                    <th scope="col">Model Samochodu</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var repair in Model)
+                {
+                    <tr>
+                        <td>@repair.Id</td>
+                        <td>@repair.RepairDate.ToString("yyyy-MM-dd")</td>
+                        <td>@repair.Description</td>
+                        <td>@repair.Cost</td>
+                        <td>@repair.CarBrand</td>
+                        <td>@repair.CarModel</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
